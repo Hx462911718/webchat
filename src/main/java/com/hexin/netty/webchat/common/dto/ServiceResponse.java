@@ -1,7 +1,8 @@
 package com.hexin.netty.webchat.common.dto;
 
-import com.esgov.csfw.common.dto.enums.ResponseCode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hexin.netty.webchat.common.dto.enums.ResponseCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

@@ -42,11 +42,11 @@ public class UserController {
             }
         } else {
             // 2. 不存在----注册
-            userResult.setUsername(user.getUsername());
-            userResult.setFaceImage("");
-            userResult.setFaceImageBig("");
-            userResult.setPassword(Md5Util.md5Encrypt32Lower(user.getPassword()));
-            userResult = userService.saveUser(userResult);
+            user.setNickname("wkypniqukanxing");
+            user.setFaceImage("");
+            user.setFaceImageBig("");
+            user.setPassword(Md5Util.getMD5Str(user.getPassword()));
+            userResult = userService.saveUser(user);
 
         }
         UserVo userVo = new UserVo();
