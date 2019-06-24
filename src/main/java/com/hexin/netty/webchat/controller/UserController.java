@@ -36,7 +36,7 @@ public class UserController {
         Users userResult = null;
         if (exit) {
             //1. 存在---登录
-            userResult = userService.queryUserForLogin(user.getUsername(), user.getPassword());
+            userResult = userService.queryUserForLogin(user.getUsername(), Md5Util.getMD5Str(user.getPassword()));
             if (userResult == null) {
                 return ServiceResponse.createByCodeMsg(ResponseCode.ERROR.getCode(), "用户名密码不z正确");
             }
