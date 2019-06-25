@@ -5,6 +5,7 @@ import com.hexin.netty.webchat.common.dto.enums.ResponseCode;
 import com.hexin.netty.webchat.entity.Users;
 import com.hexin.netty.webchat.service.IUserService;
 import com.hexin.netty.webchat.util.Md5Util;
+import com.hexin.netty.webchat.vo.ChatVo;
 import com.hexin.netty.webchat.vo.UserVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class UserController {
             //1. 存在---登录
             userResult = userService.queryUserForLogin(user.getUsername(), Md5Util.getMD5Str(user.getPassword()));
             if (userResult == null) {
-                return ServiceResponse.createByCodeMsg(ResponseCode.ERROR.getCode(), "用户名密码不z正确");
+                return ServiceResponse.createByCodeMsg(ResponseCode.ERROR.getCode(), "用户名密码不正确");
             }
         } else {
             // 2. 不存在----注册
@@ -52,5 +53,25 @@ public class UserController {
         UserVo userVo = new UserVo();
         BeanUtils.copyProperties(userResult,userVo);
         return ServiceResponse.createSuccessByData(userVo);
+    }
+
+    @PostMapping("/queryFriendsById")
+    public  ServiceResponse queryFriendsById(@RequestBody Users users){
+        String id = users.getId();
+        if(StringUtils.isEmpty(id)){
+            return ServiceResponse.createByCodeMsg(ResponseCode.ERROR.getCode(), "userId为空");
+        }
+        return  userService.queryFriendsById(id);
+
+    }
+
+    @PostMapping("/queryChatMsg")
+    public  ServiceResponse queryChatMsg(@RequestBody ChatVo chatVo){
+        if(chatVo== null || StringUtils.isEmpty(chatVo.getSendUserId()) || StringUtils.isEmpty(chatVo.getAcceptUserId())){
+            return ServiceResponse.createByCodeMsg(ResponseCode.ERROR.getCode(), "参数不正确");
+
+        }
+        return  userService.queryChatMsg(chatVo);
+
     }
 }

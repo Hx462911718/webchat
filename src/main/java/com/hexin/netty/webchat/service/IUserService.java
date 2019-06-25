@@ -1,6 +1,8 @@
 package com.hexin.netty.webchat.service;
 
+import com.hexin.netty.webchat.common.dto.ServiceResponse;
 import com.hexin.netty.webchat.entity.Users;
+import com.hexin.netty.webchat.vo.ChatVo;
 
 /**
  * @author hexin
@@ -32,6 +34,7 @@ public interface IUserService {
      Users saveUser(Users userResult);
 
 
+    ServiceResponse queryFriendsById(String id);
 
-
+    ServiceResponse queryChatMsg(ChatVo chatVo);
 }

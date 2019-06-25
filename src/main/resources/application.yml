@@ -34,6 +34,20 @@ spring:
           #??PSCache?????????PSCache????oracle??true?mysql??false????????????false
           pool-prepared-statements: false
           max-pool-prepared-statement-per-connection-size: 20
+    redis:
+        pool:
+        database: 0
+        host: 127.0.0.1
+        port: 6379
+        password: hexin
+        timeout: 2000ms
+    cache:
+      type: redis
+      redis:
+        cache-null-values: false
+        time-to-live: 360000ms
+
+
 #    mvc:
 #        view:
 #          prefix: /WEB-INF/views/
@@ -54,3 +68,8 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
     returnPageInfo: check
+
+
+socketio:
+    host: 132.126.2.29
+    port: 9002
