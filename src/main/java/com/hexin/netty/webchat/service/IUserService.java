@@ -37,4 +37,6 @@ public interface IUserService {
     ServiceResponse queryFriendsById(String id);
 
     ServiceResponse queryChatMsg(ChatVo chatVo);
+
+    ServiceResponse queryUserByNickname(Users users);
 }

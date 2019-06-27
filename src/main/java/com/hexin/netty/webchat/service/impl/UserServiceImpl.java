@@ -93,4 +93,11 @@ public class UserServiceImpl implements IUserService {
        List<Map> list =  chatMsgMapper.queryChatMsg(chatVo);
         return ServiceResponse.createSuccessByData(list);
     }
+
+    @Override
+    public ServiceResponse queryUserByNickname(Users users) {
+        List<Map> list =  usersMapper.queryUserByNickname(users);
+
+        return ServiceResponse.createSuccessByData(list);
+    }
 }

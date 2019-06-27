@@ -74,4 +74,12 @@ public class UserController {
         return  userService.queryChatMsg(chatVo);
 
     }
+
+    @PostMapping("queryUserByNickname")
+    public ServiceResponse queryUserByNickname(@RequestBody Users users){
+        if(users == null || StringUtils.isEmpty(users.getId()) || StringUtils.isEmpty(users.getNickname())){
+            return ServiceResponse.createByCodeMsg(ResponseCode.ERROR.getCode(), "参数不正确");
+        }
+        return  userService.queryUserByNickname(users);
+    }
 }

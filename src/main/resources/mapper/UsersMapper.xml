@@ -15,4 +15,12 @@
     <result column="cid" property="cid" jdbcType="VARCHAR" />
   </resultMap>
 
+
+  <select id="queryUserByNickname" resultType="java.util.Map">
+      select id,nickname,face_image from users user where user.id not in
+      (SELECT my_friend_user_id FROM my_friends WHERE my_user_id = #{u.id})
+      and user.id!=#{u.id} and
+      user.nickname like   concat("%",#{u.nickname},"%")
+
+  </select>
 </mapper>
