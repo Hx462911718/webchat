@@ -1,6 +1,7 @@
 package com.hexin.netty.webchat.service;
 
 import com.hexin.netty.webchat.common.dto.ServiceResponse;
+import com.hexin.netty.webchat.entity.FriendsRequest;
 import com.hexin.netty.webchat.entity.Users;
 import com.hexin.netty.webchat.vo.ChatVo;
 
@@ -39,4 +40,6 @@ public interface IUserService {
     ServiceResponse queryChatMsg(ChatVo chatVo);
 
     ServiceResponse queryUserByNickname(Users users);
+
+    int friendsRequest(FriendsRequest friendsRequest);
 }

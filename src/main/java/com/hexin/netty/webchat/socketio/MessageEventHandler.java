@@ -10,7 +10,9 @@ import com.corundumstudio.socketio.annotation.OnDisconnect;
 import com.corundumstudio.socketio.annotation.OnEvent;
 import com.hexin.netty.webchat.constant.SocketCodeConstant;
 import com.hexin.netty.webchat.entity.ChatMsg;
+import com.hexin.netty.webchat.entity.FriendsRequest;
 import com.hexin.netty.webchat.service.IChatMsgService;
+import com.hexin.netty.webchat.service.IUserService;
 import com.hexin.netty.webchat.service.SocketService;
 import com.hexin.netty.webchat.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class MessageEventHandler {
 
     @Autowired
     private IChatMsgService chatMsgService;
+
+    @Autowired
+    private IUserService userService;
 
     public static SocketIOServer socketIOServer;
 
@@ -91,6 +96,30 @@ public class MessageEventHandler {
 
 
 
+    @OnEvent(value = SocketCodeConstant.NOTICE_MESSAGE)
+    public void noticeMessage(SocketIOClient client, AckRequest request,MessageInfo data){
+
+
+        try {
+
+            FriendsRequest friendsRequest = new FriendsRequest();
+            friendsRequest.setAcceptUserId(data.getReceiver());
+            friendsRequest.setSendUserId(data.getSender());
+            friendsRequest.setRequestDateTime(data.getSendTime());
+            int code = userService.friendsRequest(friendsRequest);
+            if (code > 0) {
+                // 1标记为发送成功
+                request.sendAckData("1");
+                socketService.get(data.getReceiver()).sendEvent(SocketCodeConstant.FRIENDS_REQUEST, data);
+            } else {
+                request.sendAckData("0","添加好友失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            // 0标记为发送失败
+            request.sendAckData("0");
+        }
+    }
 
 
 

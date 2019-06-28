@@ -53,6 +53,11 @@ public interface SocketCodeConstant {
      */
     String CANCEL_QUEUE = "cancelQueue";
 
+    /***
+     * 好友请求
+     */
+    String FRIENDS_REQUEST = "friendsRequest";
+
 
 
 }

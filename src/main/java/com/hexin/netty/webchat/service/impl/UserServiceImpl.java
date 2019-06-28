@@ -2,9 +2,11 @@ package com.hexin.netty.webchat.service.impl;
 
 import com.hexin.netty.webchat.common.dto.ServiceResponse;
 import com.hexin.netty.webchat.dao.ChatMsgMapper;
+import com.hexin.netty.webchat.dao.FriendsRequestMapper;
 import com.hexin.netty.webchat.dao.MyFriendsMapper;
 import com.hexin.netty.webchat.dao.UsersMapper;
 import com.hexin.netty.webchat.entity.ChatMsg;
+import com.hexin.netty.webchat.entity.FriendsRequest;
 import com.hexin.netty.webchat.entity.MyFriends;
 import com.hexin.netty.webchat.entity.Users;
 import com.hexin.netty.webchat.service.IUserService;
@@ -37,6 +39,8 @@ public class UserServiceImpl implements IUserService {
     private MyFriendsMapper myFriendsMapper;
     @Autowired
     private ChatMsgMapper chatMsgMapper;
+    @Autowired
+    private FriendsRequestMapper friendsRequestMapper;
 
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -99,5 +103,18 @@ public class UserServiceImpl implements IUserService {
         List<Map> list =  usersMapper.queryUserByNickname(users);
 
         return ServiceResponse.createSuccessByData(list);
+    }
+
+    @Override
+    public int friendsRequest(FriendsRequest friendsRequest) {
+        //判断是否存在请求
+        List<Map> list =  friendsRequestMapper.queryExitsRequest(friendsRequest);
+        if(list.size()>0){
+            return  list.size();
+        }else {
+            friendsRequest.setId(UUIDUtil.getUUID());
+          int code =  friendsRequestMapper.insert(friendsRequest);
+          return code;
+        }
     }
 }
