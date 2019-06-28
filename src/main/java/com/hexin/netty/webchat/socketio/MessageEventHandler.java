@@ -11,6 +11,7 @@ import com.corundumstudio.socketio.annotation.OnEvent;
 import com.hexin.netty.webchat.constant.SocketCodeConstant;
 import com.hexin.netty.webchat.entity.ChatMsg;
 import com.hexin.netty.webchat.entity.FriendsRequest;
+import com.hexin.netty.webchat.entity.MyFriends;
 import com.hexin.netty.webchat.service.IChatMsgService;
 import com.hexin.netty.webchat.service.IUserService;
 import com.hexin.netty.webchat.service.SocketService;
@@ -18,6 +19,8 @@ import com.hexin.netty.webchat.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sun.plugin.util.UIUtil;
+
+import java.util.Map;
 
 
 /**
@@ -121,6 +124,46 @@ public class MessageEventHandler {
         }
     }
 
+
+    @OnEvent(value = SocketCodeConstant.ADD_FRIENDS)
+    public void addFriends(SocketIOClient client, AckRequest request,MessageInfo data){
+
+
+        try {
+            Map<String,Object> map =data.getPayload();
+            boolean flag = (boolean) map.get("flag");
+            if(flag) {
+                //同意添加好友
+                MyFriends friendo  = new MyFriends();
+                MyFriends friendy  = new MyFriends();
+                friendo.setId(UUIDUtil.getUUID());
+                friendo.setMyUserId(data.getSender());
+                friendo.setMyFriendUserId(data.getReceiver());
+                friendy.setId(UUIDUtil.getUUID());
+                friendy.setMyUserId(data.getReceiver());
+                friendy.setMyFriendUserId(data.getSender());
+                userService.addFriends(friendo,friendy);
+                FriendsRequest friendsRequest = new FriendsRequest();
+                friendsRequest.setSendUserId(data.getReceiver());
+                userService.deleteRequest(friendsRequest);
+                socketService.get(data.getReceiver()).sendEvent(SocketCodeConstant.FRIENDS_CHANGE, data);
+                socketService.get(data.getSender()).sendEvent(SocketCodeConstant.FRIENDS_CHANGE, data);
+                socketService.get(data.getSender()).sendEvent(SocketCodeConstant.FRIENDS_REQUEST, data);
+
+            }else {
+                //拒绝添加好友
+                FriendsRequest friendsRequest = new FriendsRequest();
+                friendsRequest.setSendUserId(data.getReceiver());
+                userService.deleteRequest(friendsRequest);
+                socketService.get(data.getSender()).sendEvent(SocketCodeConstant.FRIENDS_REQUEST, data);
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            // 0标记为发送失败
+            request.sendAckData("0");
+        }
+    }
 
 
 

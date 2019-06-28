@@ -2,6 +2,7 @@ package com.hexin.netty.webchat.service;
 
 import com.hexin.netty.webchat.common.dto.ServiceResponse;
 import com.hexin.netty.webchat.entity.FriendsRequest;
+import com.hexin.netty.webchat.entity.MyFriends;
 import com.hexin.netty.webchat.entity.Users;
 import com.hexin.netty.webchat.vo.ChatVo;
 
@@ -42,4 +43,10 @@ public interface IUserService {
     ServiceResponse queryUserByNickname(Users users);
 
     int friendsRequest(FriendsRequest friendsRequest);
+
+    ServiceResponse queryFriendRequest(Users users);
+
+    int addFriends(MyFriends friendo, MyFriends friendy);
+
+    int deleteRequest(FriendsRequest friendsRequest);
 }

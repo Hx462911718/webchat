@@ -21,4 +21,7 @@ public interface UsersMapper extends MyMapper<Users> {
     int updateByExample(@Param("record") Users record, @Param("example") UsersExample example);
 
     List<Map> queryUserByNickname(@Param("u") Users users);
+
+    @Select("select id,nickname,face_image from users where id in (select send_user_id from friends_request where accept_user_id =#{id})")
+    List<Map> queryFriendRequest(@Param("id") String id);
 }

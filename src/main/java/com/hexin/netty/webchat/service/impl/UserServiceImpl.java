@@ -117,4 +117,25 @@ public class UserServiceImpl implements IUserService {
           return code;
         }
     }
+
+    @Override
+    public ServiceResponse queryFriendRequest(Users users) {
+        List<Map> list =   usersMapper.queryFriendRequest(users.getId());
+        return ServiceResponse.createSuccessByData(list);
+    }
+
+    @Override
+    public int addFriends(MyFriends friendo, MyFriends friendy) {
+
+        int code = 0;
+        code = myFriendsMapper.insert(friendo);
+        code = myFriendsMapper.insert(friendy);
+
+        return code;
+    }
+
+    @Override
+    public int deleteRequest(FriendsRequest friendsRequest) {
+        return  friendsRequestMapper.delete(friendsRequest);
+    }
 }

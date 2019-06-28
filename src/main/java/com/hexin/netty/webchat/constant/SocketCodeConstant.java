@@ -29,7 +29,7 @@ public interface SocketCodeConstant {
     /**
      * 用户接入聊天
      */
-    String ACCESS_CHATIN  = "accessChatIn";
+    String ACCESS_CHATIN = "accessChatIn";
 
 
     /**
@@ -51,12 +51,20 @@ public interface SocketCodeConstant {
     /***
      * 取消排队
      */
-    String CANCEL_QUEUE = "cancelQueue";
+    String ADD_FRIENDS = "addFriends";
 
     /***
      * 好友请求
      */
     String FRIENDS_REQUEST = "friendsRequest";
+
+
+    /***
+     * FRIEND
+     */
+    String FRIENDS_CHANGE = "friendsChange";
+
+
 
 
 

@@ -82,4 +82,13 @@ public class UserController {
         }
         return  userService.queryUserByNickname(users);
     }
+
+    @PostMapping("queryFriendRequest")
+    public ServiceResponse queryFriendRequest(@RequestBody Users users){
+        if(users == null || StringUtils.isEmpty(users.getId())){
+            return ServiceResponse.createByCodeMsg(ResponseCode.ERROR.getCode(), "参数不正确");
+        }
+        return  userService.queryFriendRequest(users);
+    }
+
 }
