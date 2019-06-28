@@ -1,5 +1,8 @@
 package com.hexin.netty.webchat.constant;
 
+/**
+ * @author hexin
+ */
 public interface SocketCodeConstant {
 
 

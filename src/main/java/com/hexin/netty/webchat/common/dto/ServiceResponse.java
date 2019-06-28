@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * 描述: 统一返回
  *
- * @author Yangjinming
+ * @author hexin
  * @create 2018/3/26 21:31
  */
 @ApiModel(value = "返回说明")

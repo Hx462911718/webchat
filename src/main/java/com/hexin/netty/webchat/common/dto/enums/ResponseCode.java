@@ -3,7 +3,7 @@ package com.hexin.netty.webchat.common.dto.enums;
 /**
  * 描述:
  *
- * @author Yangjinming
+ * @author Hexin
  * @create 2018/3/26 21:31
  */
 public enum ResponseCode {
